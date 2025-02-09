@@ -53,8 +53,8 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp ESC>, <&kp GRAVE>;
-            mods = <(MOD_LGUI | MOD_LSHIFT)>;
-            keep-mods = <(MOD_LSHIFT)>;
+            mods = <(MOD_LGUI|MOD_RGUI|MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
         mo_hold: mo_hold {
