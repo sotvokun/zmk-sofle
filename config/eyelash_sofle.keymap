@@ -53,14 +53,14 @@
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp ESC>, <&morph_gesc_grave>;
-            mods = <(MOD_LGUI)>
+            mods = <(MOD_LGUI)>;
         };
 
         morph_gesc_grave: morph_gesc_grave {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
             bindings = <&kp GRAVE>, <&kp TILDE>;
-            mods = <(MOD_LSFT)>
+            mods = <(MOD_LSFT)>;
         };
 
         mo_space: mo_space {
