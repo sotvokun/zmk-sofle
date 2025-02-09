@@ -28,9 +28,9 @@
 };
 
 &msc {
-    acceleration-exponent = <0>;      // 0
-    time-to-max-speed-ms = <0>;       // 300
-    delay-ms = <0>;                   // 0
+    acceleration-exponent = <0>;
+    time-to-max-speed-ms = <0>;
+    delay-ms = <0>;
 };
 
 &mmv {
@@ -45,16 +45,8 @@
         scroll_encoder: scroll_encoder {
             compatible = "zmk,behavior-sensor-rotate";
             #sensor-binding-cells = <0>;
-            bindings = <&msc SCRL_DOWN>, <&msc SCRL_UP>;
+            bindings = <&msc SCRL_UP>, <&msc SCRL_DOWN>;
             tap-ms = <30>;
-        };
-
-        morph_gesc: morph_gesc {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp ESC>, <&kp GRAVE>;
-            mods = <(MOD_LGUI|MOD_RGUI|MOD_LSFT|MOD_RSFT)>;
-            keep-mods = <(MOD_LSFT|MOD_RSFT)>;
         };
 
         mo_hold: mo_hold {
@@ -64,6 +56,14 @@
             tapping-term-ms = <200>;
             bindings = <&mo>, <&kp>;
         };
+
+        mo_hold_500: mo_hold_500 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <500>;
+            bindings = <&mo>, <&kp>;
+        };
     };
 
     keymap {
@@ -71,11 +71,11 @@
 
         layer0 {
             bindings = <
-                &morph_gesc     &kp N1          &kp N2        &kp N3        &kp N4        &kp N5         &kp UP_ARROW     &kp N6            &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
-                &kp TAB         &kp Q           &kp W         &kp E         &kp R         &kp T          &kp DOWN_ARROW   &kp Y             &kp U      &kp I      &kp O            &kp P       &kp MINUS
-                &kp LCTRL       &kp A           &kp S         &kp D         &kp F         &kp G          &kp LEFT_ARROW   &kp H             &kp J      &kp K      &kp L            &kp SEMI    &kp APOS
-                &kp LSHIFT      &kp Z           &kp X         &kp C         &kp V         &kp B          &kp RIGHT_ARROW  &kp N             &kp M      &kp COMMA  &kp DOT          &kp FSLH    &kp EQUAL
-                &none           &mo 2           &kp LALT      &kp LGUI      &none         &kp SPACE      &kp ENTER        &mo_hold 1 SPACE  &kp RET    &kp LBKT   &kp RBKT         &kp BSLH
+                &kp GRAVE       &kp N1               &kp N2        &kp N3        &kp N4        &kp N5         &kp UP_ARROW     &kp N6            &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
+                &kp TAB         &kp Q                &kp W         &kp E         &kp R         &kp T          &kp DOWN_ARROW   &kp Y             &kp U      &kp I      &kp O            &kp P       &kp MINUS
+                &kp LCTRL       &kp A                &kp S         &kp D         &kp F         &kp G          &kp LEFT_ARROW   &kp H             &kp J      &kp K      &kp L            &kp SEMI    &kp APOS
+                &kp LSHIFT      &kp Z                &kp X         &kp C         &kp V         &kp B          &kp RIGHT_ARROW  &kp N             &kp M      &kp COMMA  &kp DOT          &kp FSLH    &kp EQUAL
+                &none           &mo_hold_500 2 LALT  &kp LGUI      &none         &kp ESC       &kp SPACE      &kp ENTER        &mo_hold 1 SPACE  &kp RET    &kp LBKT   &kp RBKT         &kp BSLH
             >;
 
             display-name = "BASE";
@@ -84,11 +84,11 @@
 
         layer_1 {
             bindings = <
-                &trans          &kp F1          &kp F2        &kp F3        &kp F4        &kp F5         &kp UP_ARROW     &kp F6        &kp F7     &kp F8     &kp F9           &kp F10     &kp DEL
-                &trans          &trans          &trans        &trans        &trans        &trans         &kp DOWN_ARROW   &kp HOME      &trans     &kp PG_UP  &trans           &trans      &kp F11
-                &trans          &trans          &trans        &trans        &trans        &trans         &kp LEFT_ARROW   &kp LEFT      &kp DOWN   &kp UP     &kp RIGHT        &trans      &trans
-                &trans          &trans          &trans        &trans        &trans        &trans         &kp RIGHT_ARROW  &trans        &kp PG_DN  &trans     &kp END          &trans      &kp F12
-                &kp C_MUTE      &trans          &trans        &trans        &trans        &trans         &kp ENTER        &trans        &trans     &trans     &trans           &trans
+                &trans          &kp F1               &kp F2        &kp F3        &kp F4        &kp F5         &kp UP_ARROW     &kp F6            &kp F7     &kp F8     &kp F9           &kp F10     &kp DEL
+                &trans          &trans               &trans        &trans        &trans        &trans         &kp DOWN_ARROW   &kp HOME          &trans     &kp PG_UP  &trans           &trans      &kp F11
+                &trans          &trans               &trans        &trans        &trans        &trans         &kp LEFT_ARROW   &kp LEFT          &kp DOWN   &kp UP     &kp RIGHT        &trans      &trans
+                &trans          &trans               &trans        &trans        &trans        &trans         &kp RIGHT_ARROW  &trans            &kp PG_DN  &trans     &kp END          &trans      &kp F12
+                &kp C_MUTE      &trans               &trans        &trans        &trans        &trans         &kp ENTER        &trans            &trans     &trans     &trans           &trans
             >;
 
             display-name = "FN";
@@ -97,15 +97,14 @@
 
         layer_2 {
             bindings = <
-                &trans          &kp F1          &kp F2        &kp F3        &kp F4        &kp F5         &mmv MOVE_UP     &trans        &trans     &trans     &trans           &trans      &trans
-                &out OUT_TOG    &bt BT_SEL 0    &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &mmv MOVE_DOWN   &trans        &trans     &trans     &trans           &trans      &trans
-                &trans          &trans          &trans        &trans        &trans        &bt BT_CLR     &mmv MOVE_LEFT   &trans        &trans     &trans     &trans           &trans      &trans
-                &trans          &trans          &trans        &trans        &trans        &bt BT_CLR_ALL &mmv MOVE_RIGHT  &trans        &trans     &trans     &trans           &bootloader &sys_reset
-                &kp C_MUTE      &trans          &trans        &trans        &trans        &trans         &mkp LCLK        &trans        &trans     &trans     &trans           &soft_off
+                &trans          &kp F1               &kp F2        &kp F3        &kp F4        &kp F5         &mmv MOVE_UP     &trans            &trans     &trans     &trans           &trans      &trans
+                &out OUT_TOG    &bt BT_SEL 0         &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &mmv MOVE_DOWN   &trans            &trans     &trans     &trans           &trans      &trans
+                &trans          &trans               &trans        &trans        &trans        &bt BT_CLR     &mmv MOVE_LEFT   &trans            &trans     &trans     &trans           &trans      &trans
+                &trans          &trans               &trans        &trans        &trans        &bt BT_CLR_ALL &mmv MOVE_RIGHT  &trans            &trans     &trans     &trans           &bootloader &sys_reset
+                &none           &trans               &trans        &trans        &trans        &trans         &mkp LCLK        &trans            &trans     &trans     &trans           &soft_off
             >;
 
             display-name = "SYS";
-            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
         };
 
     };
