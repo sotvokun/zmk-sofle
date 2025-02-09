@@ -49,18 +49,12 @@
             tap-ms = <30>;
         };
 
-        morph_gesc_esc: morph_gesc_esc {
+        morph_gesc: morph_gesc {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp ESC>, <&morph_gesc_grave>;
-            mods = <(MOD_LGUI)>;
-        };
-
-        morph_gesc_grave: morph_gesc_grave {
-            compatible = "zmk,behavior-mod-morph";
-            #binding-cells = <0>;
-            bindings = <&kp GRAVE>, <&kp TILDE>;
-            mods = <(MOD_LSFT)>;
+            bindings = <&kp ESC>, <&kp GRAVE>;
+            mods = <(MOD_LGUI | MOD_LSHIFT)>;
+            keep-mods = <(MOD_LSHIFT)>;
         };
 
         mo_hold: mo_hold {
@@ -77,7 +71,7 @@
 
         layer0 {
             bindings = <
-                &morph_gesc_esc &kp N1          &kp N2        &kp N3        &kp N4        &kp N5         &kp UP_ARROW     &kp N6            &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
+                &morph_gesc     &kp N1          &kp N2        &kp N3        &kp N4        &kp N5         &kp UP_ARROW     &kp N6            &kp N7     &kp N8     &kp N9           &kp N0      &kp BACKSPACE
                 &kp TAB         &kp Q           &kp W         &kp E         &kp R         &kp T          &kp DOWN_ARROW   &kp Y             &kp U      &kp I      &kp O            &kp P       &kp MINUS
                 &kp LCTRL       &kp A           &kp S         &kp D         &kp F         &kp G          &kp LEFT_ARROW   &kp H             &kp J      &kp K      &kp L            &kp SEMI    &kp APOS
                 &kp LSHIFT      &kp Z           &kp X         &kp C         &kp V         &kp B          &kp RIGHT_ARROW  &kp N             &kp M      &kp COMMA  &kp DOT          &kp FSLH    &kp EQUAL
