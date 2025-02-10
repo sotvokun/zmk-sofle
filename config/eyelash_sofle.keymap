@@ -1,5 +1,5 @@
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // 600
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 100    // 10
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 35    // 10
 #include <input/processors.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
@@ -49,20 +49,40 @@
             tap-ms = <30>;
         };
 
-        mo_hold: mo_hold {
+        // Hold-tap: hold preferred
+        ht_hpmo: ht_hpmo {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <200>;
-            bindings = <&mo>, <&kp>;
+            bindings = <&ht>, <&mo>;
         };
 
-        mo_hold_500: mo_hold_500 {
+        // Hold-tap: tap preferred
+        ht_tpmo: ht_tpmo {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "hold-preferred";
-            tapping-term-ms = <500>;
-            bindings = <&mo>, <&kp>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <400>;
+            bindings = <&ht>, <&mo>;
+        };
+
+        // Mod-Morph: LBracket
+        mm_lbracket: mm_lbracket {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp N9>, <&kp LBKTS>;
+            mods = <(MOD_LGUI|MOD_RGUI|MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        // Mod-Morph: RBracket
+        mm_rbracket: mm_rbracket {
+            compatible = "zmk,behavior-mod-morph";
+            #binding-cells = <0>;
+            bindings = <&kp N0>, <&kp RBKTS>;
+            mods = <(MOD_LGUI|MOD_RGUI|MOD_LSFT|MOD_RSFT)>;
+            keep-mods = <(MOD_LSFT|MOD_RSFT)>;
         };
     };
 
@@ -71,11 +91,11 @@
 
         layer0 {
             bindings = <
-&kp ESC         &kp N1               &kp N2        &kp N3        &kp N4        &kp N5         &kp UP_ARROW     &kp N6            &kp N7         &kp N8          &kp N9           &kp N0      &kp BACKSPACE
-&kp TAB         &kp Q                &kp W         &kp E         &kp R         &kp T          &kp DOWN_ARROW   &kp Y             &kp U          &kp I           &kp O            &kp P       &kp MINUS
-&kp LCTRL       &kp A                &kp S         &kp D         &kp F         &kp G          &kp LEFT_ARROW   &kp H             &kp J          &kp K           &kp L            &kp SEMI    &kp APOS
-&kp LSHIFT      &kp Z                &kp X         &kp C         &kp V         &kp B          &kp RIGHT_ARROW  &kp N             &kp M          &kp COMMA       &kp DOT          &kp FSLH    &kp EQUAL
-&none           &mo_hold_500 2 LALT  &kp LGUI      &none         &kp ESC       &kp SPACE      &kp ENTER        &mo_hold 1 SPACE  &kp RET        &kp LBKT        &kp RBKT         &kp BSLH
+&kp ESC         &kp N1               &kp N2        &kp N3        &kp N4        &kp N5         &kp UP_ARROW     &kp N6            &kp N7             &kp N8          &mm_lbracket     &mm_rbracket   &kp BACKSPACE
+&kp TAB         &kp Q                &kp W         &kp E         &kp R         &kp T          &kp DOWN_ARROW   &kp Y             &kp U              &kp I           &kp O            &kp P          &kp MINUS
+&kp LCTRL       &kp A                &kp S         &kp D         &kp F         &kp G          &kp LEFT_ARROW   &kp H             &kp J              &kp K           &kp L            &kp SEMI       &kp EQUAL
+&kp LSHIFT      &kp Z                &kp X         &kp C         &kp V         &kp B          &kp RIGHT_ARROW  &kp N             &kp M              &kp COMMA       &kp DOT          &kp FSLH       &kp SINGLE_QUOTE
+&none           &ht_tpmo 2 LALT      &kp LGUI      &none         &kp SPACE     &kp BACKSPACE  &kp ENTER        &kp RET           &ht_hpmo 1 SPACE   &kp LBKT        &kp RBKT         &kp BSLH
             >;
 
             display-name = "BASE";
@@ -84,11 +104,11 @@
 
         layer_1 {
             bindings = <
-&kp GRAVE       &kp F1               &kp F2        &kp F3        &kp F4        &kp F5         &kp UP_ARROW     &kp F6            &kp F7         &kp F8          &kp F9           &kp F10     &kp DEL
-&trans          &trans               &trans        &trans        &trans        &trans         &kp DOWN_ARROW   &kp HOME          &trans         &kp PG_UP       &trans           &trans      &kp F11
-&trans          &trans               &trans        &trans        &trans        &trans         &kp LEFT_ARROW   &kp LEFT          &kp DOWN       &kp UP          &kp RIGHT        &trans      &trans
-&trans          &trans               &trans        &trans        &trans        &trans         &kp RIGHT_ARROW  &trans            &kp PG_DN      &trans          &kp END          &trans      &kp F12
-&kp C_MUTE      &trans               &trans        &trans        &trans        &trans         &kp ENTER        &trans            &trans         &trans          &trans           &trans
+&trans          &kp F1               &kp F2        &kp F3        &kp F4        &kp F5         &mmv MOVE_UP     &kp F6            &kp F7             &kp F8          &kp F9           &kp F10        &kp DEL
+&trans          &trans               &trans        &trans        &trans        &trans         &mmv MOVE_DOWN   &kp HOME          &trans             &kp PG_UP       &trans           &trans         &kp F11
+&trans          &trans               &trans        &trans        &trans        &trans         &mmv MOVE_LEFT   &kp LEFT          &kp DOWN           &kp UP          &kp RIGHT        &trans         &kp F12
+&trans          &trans               &trans        &trans        &trans        &trans         &mmv MOVE_RIGHT  &trans            &kp PG_DN          &trans          &kp END          &trans         &kp GRAVE
+&kp C_MUTE      &trans               &trans        &trans        &trans        &trans         &mkp LCLK        &trans            &trans             &trans          &trans           &trans
             >;
 
             display-name = "FN";
@@ -97,11 +117,11 @@
 
         layer_2 {
             bindings = <
-&trans          &kp F1               &kp F2        &kp F3        &kp F4        &kp F5         &mmv MOVE_UP     &trans            &trans         &trans          &trans           &trans      &trans
-&out OUT_TOG    &bt BT_SEL 0         &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &mmv MOVE_DOWN   &trans            &trans         &trans          &trans           &trans      &trans
-&trans          &trans               &trans        &trans        &trans        &bt BT_CLR     &mmv MOVE_LEFT   &trans            &msc SCRL_DOWN &msc SCRL_UP    &trans           &trans      &trans
-&trans          &trans               &trans        &trans        &trans        &bt BT_CLR_ALL &mmv MOVE_RIGHT  &trans            &trans         &trans          &trans           &bootloader &sys_reset
-&none           &trans               &trans        &trans        &trans        &trans         &mkp LCLK        &trans            &trans         &trans          &trans           &soft_off
+&trans          &kp F1               &kp F2        &kp F3        &kp F4        &kp F5         &trans           &trans            &trans             &trans          &trans           &trans         &trans
+&out OUT_TOG    &bt BT_SEL 0         &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4   &trans           &trans            &trans             &trans          &trans           &trans         &trans
+&trans          &trans               &trans        &trans        &trans        &bt BT_CLR     &trans           &trans            &msc SCRL_DOWN     &msc SCRL_UP    &trans           &trans         &trans
+&trans          &trans               &trans        &trans        &trans        &bt BT_CLR_ALL &trans           &trans            &trans             &trans          &trans           &bootloader    &sys_reset
+&none           &trans               &trans        &trans        &trans        &trans         &trans           &trans            &trans             &trans          &trans           &soft_off
             >;
 
             display-name = "SYS";
