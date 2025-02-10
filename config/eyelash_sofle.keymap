@@ -55,7 +55,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <200>;
-            bindings = <&ht>, <&mo>;
+            bindings = <&mo>, <&kp>;
         };
 
         // Hold-tap: tap preferred
@@ -64,14 +64,14 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <400>;
-            bindings = <&ht>, <&mo>;
+            bindings = <&mo>, <&kp>;
         };
 
         // Mod-Morph: LBracket
         mm_lbracket: mm_lbracket {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp N9>, <&kp LBKTS>;
+            bindings = <&kp N9>, <&kp LBKT>;
             mods = <(MOD_LGUI|MOD_RGUI|MOD_LSFT|MOD_RSFT)>;
             keep-mods = <(MOD_LSFT|MOD_RSFT)>;
         };
@@ -80,7 +80,7 @@
         mm_rbracket: mm_rbracket {
             compatible = "zmk,behavior-mod-morph";
             #binding-cells = <0>;
-            bindings = <&kp N0>, <&kp RBKTS>;
+            bindings = <&kp N0>, <&kp RBKT>;
             mods = <(MOD_LGUI|MOD_RGUI|MOD_LSFT|MOD_RSFT)>;
             keep-mods = <(MOD_LSFT|MOD_RSFT)>;
         };
